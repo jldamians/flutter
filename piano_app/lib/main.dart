@@ -34,10 +34,10 @@ class _PianoPageState extends State<PianoPage> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: FlatButton(
-              child: Row(),
               color: Colors.red,
               onPressed: () {
                 audioCache.play('note1.wav');
@@ -46,7 +46,6 @@ class _PianoPageState extends State<PianoPage> {
           ),
           Expanded(
             child: FlatButton(
-              child: Row(),
               color: Colors.orange,
               onPressed: () {
                 audioCache.play('note2.wav');
@@ -55,7 +54,6 @@ class _PianoPageState extends State<PianoPage> {
           ),
           Expanded(
             child: FlatButton(
-              child: Row(),
               color: Colors.yellow,
               onPressed: () {
                 audioCache.play('note3.wav');
@@ -64,7 +62,6 @@ class _PianoPageState extends State<PianoPage> {
           ),
           Expanded(
             child: FlatButton(
-              child: Row(),
               color: Colors.green,
               onPressed: () {
                 audioCache.play('note4.wav');
@@ -73,7 +70,6 @@ class _PianoPageState extends State<PianoPage> {
           ),
           Expanded(
             child: FlatButton(
-              child: Row(),
               color: Colors.blueGrey,
               onPressed: () {
                 audioCache.play('note5.wav');
@@ -82,7 +78,6 @@ class _PianoPageState extends State<PianoPage> {
           ),
           Expanded(
             child: FlatButton(
-              child: Row(),
               color: Colors.blue,
               onPressed: () {
                 audioCache.play('note6.wav');
@@ -91,7 +86,6 @@ class _PianoPageState extends State<PianoPage> {
           ),
           Expanded(
             child: FlatButton(
-              child: Row(),
               color: Colors.purple,
               onPressed: () {
                 audioCache.play('note7.wav');
