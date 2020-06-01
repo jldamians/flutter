@@ -1,8 +1,11 @@
 import 'dart:ffi';
 
 import 'package:bmi/components/my_button.dart';
+import 'package:bmi/components/my_new_button.dart';
 import 'package:bmi/components/my_card.dart';
 import 'package:bmi/constants.dart';
+import 'package:bmi/models/bmi_calculator.dart';
+import 'package:bmi/screens/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -11,10 +14,13 @@ class InputPage extends StatefulWidget {
   _InputPageState createState() => _InputPageState();
 }
 
+enum Sex { male, famale }
+
 class _InputPageState extends State<InputPage> {
   int height = 180;
   int weight = 60;
   int age = 20;
+  Sex sex = Sex.male;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,10 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: MyCard(
-                    color: kActiveCardColour,
+                    onTap: () => setState(() => this.sex = Sex.male),
+                    color: this.sex == Sex.male
+                        ? kActiveCardColour
+                        : kInactiveCardColour,
                     content: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -53,7 +62,10 @@ class _InputPageState extends State<InputPage> {
                 ),
                 Expanded(
                   child: MyCard(
-                    color: kInactiveCardColour,
+                    onTap: () => setState(() => this.sex = Sex.famale),
+                    color: this.sex == Sex.famale
+                        ? kActiveCardColour
+                        : kInactiveCardColour,
                     content: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -90,7 +102,7 @@ class _InputPageState extends State<InputPage> {
                     ),
                   ),
                   Text(
-                    '180cm',
+                    '$height cm',
                     style: TextStyle(
                       fontSize: 40,
                     ),
@@ -126,7 +138,7 @@ class _InputPageState extends State<InputPage> {
                           ),
                         ),
                         Text(
-                          '60',
+                          '$weight',
                           style: TextStyle(
                             fontSize: 40,
                           ),
@@ -136,12 +148,22 @@ class _InputPageState extends State<InputPage> {
                           children: <Widget>[
                             MyButton(
                               iconData: FontAwesomeIcons.minus,
+                              onTap: () {
+                                setState(() {
+                                  this.weight--;
+                                });
+                              },
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             MyButton(
                               iconData: FontAwesomeIcons.plus,
+                              onTap: () {
+                                setState(() {
+                                  this.weight++;
+                                });
+                              },
                             ),
                           ],
                         ),
@@ -162,7 +184,7 @@ class _InputPageState extends State<InputPage> {
                           ),
                         ),
                         Text(
-                          '20',
+                          '$age',
                           style: TextStyle(
                             fontSize: 40,
                           ),
@@ -172,12 +194,22 @@ class _InputPageState extends State<InputPage> {
                           children: <Widget>[
                             MyButton(
                               iconData: FontAwesomeIcons.minus,
+                              onTap: () {
+                                setState(() {
+                                  this.age--;
+                                });
+                              },
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             MyButton(
                               iconData: FontAwesomeIcons.plus,
+                              onTap: () {
+                                setState(() {
+                                  this.age++;
+                                });
+                              },
                             ),
                           ],
                         ),
@@ -187,6 +219,30 @@ class _InputPageState extends State<InputPage> {
                 ),
               ],
             ),
+          ),
+          MyNewButton(
+            buttonName: 'CALCULATE',
+            onTap: () {
+              var calculator =
+                  BmiCalculator(height: this.height, weight: this.weight);
+              var bmi = calculator.calculate();
+              var result = calculator.getResultado();
+              var traduction = calculator.getInterpretacion();
+
+              print(bmi);
+              print(result);
+              print(traduction);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ResultsPage(
+                          bmi: bmi,
+                          result: result,
+                          traduction: traduction,
+                        )),
+              );
+            },
           ),
         ],
       ),
